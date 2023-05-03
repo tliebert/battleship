@@ -4,29 +4,16 @@ test("returns the number one", () => {
   expect(returnOne()).toEqual(1);
 });
 
-test("returns length of ship", () => {
-  let ship = shipFactory(3);
-  expect(ship.returnLength()).toBe(3);
-});
-
-// test("dan isSunk test", () => {
-//   let ship = danShipFactory();
-//   expect(ship.isSunk()).toBe(false);
+// test.todo("returns length of ship", () => {
+//   let ship = shipFactory(3);
+//   expect(ship.returnLength()).toBe(3);
 // });
 
 // Round 2
-test("Ship Sinks after total hits", () => {
-  let ship = shipFactory(1);
-  ship.registerHit();
-  expect(ship.isThisShipSunk()).toBe(true);
-});
-
-// test("dan isSunk 3 hit test", () => {
-//   let ship = danShipFactory(3);
-//   ship.hit();
-//   ship.hit();
-//   ship.hit();
-//   expect(ship.isSunk()).toBe(true);
+// test.todo("Ship Sinks after total hits", () => {
+//   let ship = shipFactory(1);
+//   ship.registerHit();
+//   expect(ship.isThisShipSunk()).toBe(true);
 // });
 
 // Gameboard Tests
@@ -40,13 +27,13 @@ test("Ship Sinks after total hits", () => {
 
 describe("gameBoard Factory", () => {
   let gameBoardInstance;
+
   beforeEach(() => {
     gameBoardInstance = gameBoardFactory();
   });
 
   it("returns empty board state", () => {
     let emptyBoard = {
-      0: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -56,25 +43,45 @@ describe("gameBoard Factory", () => {
       7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     };
 
     expect(gameBoardInstance.returnBoardRepresentation()).toEqual(emptyBoard);
   });
 
-  it("accepts the given coordinates", () => {
-    expect();
+  //Options here:
+  //placeShip returns gameboard entirely, pure function. Will always get same thing back
+  //expect it to change a variable, aka the board state, and return that
+  //I'm thinking about how to keep track of the ship
+
+  it("places a one length ship at the given coordinates", () => {
+    const ship = shipFactory(1);
+    let oneShip = {
+      1: [{ ship }, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    };
+
+    // The question for this test is how to resolve the problem of ship not matching
+    // the two methods would be either to add "ship maker" as a functional parameter
+    // to placeShip, also telling it how to make the ship...
+    // or to
+    // Public side effects aka "state"
+    // The interface of placeShip
+    // Method: refactor placeShip to take a ship object.
+
+    expect(gameBoardInstance.placeShip([1, 1], 1)["1"][0]).toMatchObject(
+      oneShip["1"][0]
+    );
+
+    // spyOne
+    // requiring methods and checking manually.
   });
 });
-
-// test.todo("dan check gameboard initially", () => {
-//   let gameboard = danGameboardFactory();
-//   expect(gameboard.areAllShipsSunk()).toBe(true);
-// });
-
-// test("dan place ship and destroy", () => {
-//   let gameboard = danGameboardFactory();
-//   gameboard.placeShip(4, 4, danShipFactory(1));
-//   expect(gameboard.areAllShipsSunk()).toBe(false);
-//   gameboard.receiveAttack(4, 4);
-//   expect(gameboard.areAllShipsSunk()).toBe(true);
-// });

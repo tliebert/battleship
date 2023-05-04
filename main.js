@@ -28,7 +28,6 @@ function shipFactory(length) {
   }
 
   return {
-    returnLength,
     registerHit,
     isThisShipSunk,
   };

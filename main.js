@@ -45,12 +45,34 @@ function gameBoardFactory() {
   const gameBoard = makeEmptyBoard();
 
   function placeShip(coordinateArray, ship) {
-    let [yaxis, xaxis] = coordinateArray;
+    let [startxcoord, startycoord] = coordinateArray[0];
+    let [endxcoord, endycoord] = coordinateArray[1];
+
+    // [1,1], [3, 1]
+
+    if (checkValidPlacement(coordinateArray)) {
+      if (startxcoord !== endxcoord) {
+        console.log("running x coord placer");
+        // take y axis and iterate through that array
+        for (let i = startxcoord; i <= endxcoord; i++) {
+          gameBoard[startycoord][i - 1] = ship;
+        }
+      } else {
+        for (let i = startycoord; i <= endycoord; i++) {
+          gameBoard[i][startxcoord - 1] = ship;
+        }
+      }
+      console.log(gameBoard);
+    }
     // make the ship and assign references to it.
 
-    gameBoard[`${yaxis}`][xaxis - 1] = { ship };
-    console.log(gameBoard);
     return gameBoard;
+  }
+
+  function checkValidPlacement(coordinateArray) {
+    let [startxcoord, startycoord] = coordinateArray[0];
+    let [endxcoord, endycoord] = coordinateArray[1];
+    return !(startxcoord !== endxcoord && startycoord !== endycoord);
   }
 
   function returnBoardRepresentation() {

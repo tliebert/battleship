@@ -74,7 +74,7 @@ describe("gameBoard Factory", () => {
   it("places a one length ship at the given coordinates", () => {
     const ship = shipFactory(1);
     let oneShip = {
-      1: [{ ship }, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      1: [ship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -98,7 +98,41 @@ describe("gameBoard Factory", () => {
     // requiring methods and checking manually.
 
     //["1"][0], ["1"][0]
-    expect(gameBoardInstance.placeShip([1, 1], ship)).toEqual(oneShip);
+    expect(
+      gameBoardInstance.placeShip(
+        [
+          [1, 1],
+          [1, 1],
+        ],
+        ship
+      )
+    ).toEqual(oneShip);
+  });
+
+  it("places a ship greather than length one at all the coordinates", () => {
+    const othership = shipFactory(3); // should this be a stub
+    let threeShip = {
+      1: [othership, othership, othership, 0, 0, 0, 0, 0, 0, 0],
+      2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    };
+    console.log("threeship", threeShip);
+    expect(
+      gameBoardInstance.placeShip(
+        [
+          [1, 1],
+          [3, 1],
+        ],
+        othership
+      )
+    ).toEqual(threeShip);
   });
 
   //

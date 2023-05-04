@@ -47,12 +47,12 @@ function makeEmptyBoard() {
 function gameBoardFactory() {
   const gameBoard = makeEmptyBoard();
 
-  function placeShip(coordinateArray, shipLength) {
+  function placeShip(coordinateArray, ship) {
     let [yaxis, xaxis] = coordinateArray;
-    const ship = shipFactory(shipLength);
-    // make the ship and assigne references to it.
+    // make the ship and assign references to it.
 
-    gameBoard[`${yaxis}`][xaxis - 1] = { ...ship };
+    gameBoard[`${yaxis}`][xaxis - 1] = { ship };
+    console.log(gameBoard);
     return gameBoard;
   }
 

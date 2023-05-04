@@ -77,11 +77,10 @@ describe("gameBoard Factory", () => {
     // The interface of placeShip
     // Method: refactor placeShip to take a ship object.
 
-    expect(gameBoardInstance.placeShip([1, 1], 1)["1"][0]).toMatchObject(
-      oneShip["1"][0]
-    );
-
     // spyOne
     // requiring methods and checking manually.
+
+    //["1"][0], ["1"][0]
+    expect(gameBoardInstance.placeShip([1, 1], ship)).toEqual(oneShip);
   });
 });

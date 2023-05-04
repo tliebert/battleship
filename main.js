@@ -6,13 +6,11 @@ function returnOne() {
 
 function shipFactory(length) {
   const shiplength = length;
-  function returnLength() {
-    return shiplength;
-  }
-  const totalHits = length;
+
   let currentHits = 0;
   function registerHit() {
     currentHits += 1;
+    return currentHits;
   }
   // register hit
   // array  update array, ship hits

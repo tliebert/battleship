@@ -25,6 +25,23 @@ test("returns the number one", () => {
 
 // recieveAttack, areAllShipsSunk, returnBoardRepresentation, placeShip
 
+describe("shipFacdtory", () => {
+  // options here are either mock some object, have registerHit return total hits, or not test
+  let ship;
+  beforeEach(() => {
+    ship = shipFactory(1);
+  });
+
+  it("registers a hit", () => {
+    expect(ship.registerHit()).toBe(1);
+  });
+
+  it("returns True if there are enough hits to sink ship", () => {
+    ship.registerHit();
+    expect(ship.isThisShipSunk()).toBe(true);
+  });
+});
+
 describe("gameBoard Factory", () => {
   let gameBoardInstance;
 
@@ -83,4 +100,6 @@ describe("gameBoard Factory", () => {
     //["1"][0], ["1"][0]
     expect(gameBoardInstance.placeShip([1, 1], ship)).toEqual(oneShip);
   });
+
+  //
 });

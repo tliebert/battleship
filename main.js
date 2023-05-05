@@ -44,25 +44,28 @@ function makeEmptyBoard() {
 function gameBoardFactory() {
   const gameBoard = makeEmptyBoard();
 
-  function placeShip(coordinateArray, ship) {
-    let [startxcoord, startycoord] = coordinateArray[0];
-    let [endxcoord, endycoord] = coordinateArray[1];
+  function placeShip(startEndCoordinateArray, ship) {
+    let [startxcoord, startycoord] = startEndCoordinateArray[0];
+    let [endxcoord, endycoord] = startEndCoordinateArray[1];
 
-    // [1,1], [3, 1]
+    let privateShip = ship
+      ? ship
+      : shipFactory(deriveShipLengthFromCoordinates(startEndCoordinateArray));
 
-    if (checkValidPlacement(coordinateArray)) {
+    // Expects an array of arrays, with each sub array containing an x and y coordinate
+
+    if (checkValidPlacement(startEndCoordinateArray)) {
       if (startxcoord !== endxcoord) {
         // take y axis and iterate through that array
         for (let i = startxcoord; i <= endxcoord; i++) {
-          gameBoard[startycoord][i - 1] = ship;
+          gameBoard[startycoord][i - 1] = privateShip;
         }
       } else {
         for (let i = startycoord; i <= endycoord; i++) {
-          gameBoard[i][startxcoord - 1] = ship;
+          gameBoard[i][startxcoord - 1] = privateShip;
         }
       }
     }
-    // make the ship and assign references to it.
 
     return gameBoard;
   }
@@ -79,9 +82,19 @@ function gameBoardFactory() {
   }
 
   function checkValidPlacement(coordinateArray) {
+    // checks if the placement is allowed.
     let [startxcoord, startycoord] = coordinateArray[0];
     let [endxcoord, endycoord] = coordinateArray[1];
     return !(startxcoord !== endxcoord && startycoord !== endycoord);
+  }
+
+  function deriveShipLengthFromCoordinates(startEndCoordinateArray) {
+    let [startxcoord, startycoord] = startEndCoordinateArray[0];
+    let [endxcoord, endycoord] = startEndCoordinateArray[1];
+    if (startxcoord != endxcoord) {
+      return Math.abs(startxcoord - endxcoord);
+    }
+    return Math.abs(startycoord - endycoord);
   }
 
   function returnBoardRepresentation() {

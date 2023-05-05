@@ -2,36 +2,15 @@ import {
   returnOne,
   shipFactory,
   gameBoardFactory,
-  registerHit,
+  registerAttack,
 } from "./main.js";
 
 test("returns the number one", () => {
   expect(returnOne()).toEqual(1);
 });
 
-// test.todo("returns length of ship", () => {
-//   let ship = shipFactory(3);
-//   expect(ship.returnLength()).toBe(3);
-// });
-
-// Round 2
-// test.todo("Ship Sinks after total hits", () => {
-//   let ship = shipFactory(1);
-//   ship.registerHit();
-//   expect(ship.isThisShipSunk()).toBe(true);
-// });
-
-// Gameboard Tests
-// place ships at coordinates by calling ship factory function
-// have a recieve attack function that takes a pair of cooprdinates
-// and logs attack w/ ship
-// log misses
-// report whether or not all ships sunk
-
-// recieveAttack, areAllShipsSunk, returnBoardRepresentation, placeShip
-
-describe("shipFacdtory", () => {
-  // options here are either mock some object, have registerHit return total hits, or not test
+describe("shipFactory", () => {
+  // options here are either mock some object, have registerAttack return total hits, or not test
   let ship;
   beforeEach(() => {
     ship = shipFactory(1);
@@ -161,7 +140,7 @@ describe("gameBoard Factory", () => {
       10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     };
 
-    gameBoardInstance.registerHit([1, 1], hitshipboard);
+    gameBoardInstance.registerAttack([1, 1], hitshipboard);
     expect(hitship.hit).toHaveBeenCalled();
   });
 

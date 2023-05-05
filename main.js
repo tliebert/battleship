@@ -75,7 +75,7 @@ function gameBoardFactory() {
     return board[ycoord][xcoord - 1];
   }
 
-  function registerHit(hitCoordinateArray, gameboard = gameBoard) {
+  function registerAttack(hitCoordinateArray, gameboard = gameBoard) {
     if (returnValueAtCoordinate(hitCoordinateArray, gameboard)) {
       returnValueAtCoordinate(hitCoordinateArray, gameboard).hit();
     }
@@ -103,7 +103,7 @@ function gameBoardFactory() {
   return {
     returnBoardRepresentation,
     placeShip,
-    registerHit,
+    registerAttack,
   };
 }
 

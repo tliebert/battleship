@@ -52,7 +52,6 @@ function gameBoardFactory() {
 
     if (checkValidPlacement(coordinateArray)) {
       if (startxcoord !== endxcoord) {
-        console.log("running x coord placer");
         // take y axis and iterate through that array
         for (let i = startxcoord; i <= endxcoord; i++) {
           gameBoard[startycoord][i - 1] = ship;
@@ -62,11 +61,21 @@ function gameBoardFactory() {
           gameBoard[i][startxcoord - 1] = ship;
         }
       }
-      console.log(gameBoard);
     }
     // make the ship and assign references to it.
 
     return gameBoard;
+  }
+
+  function returnValueAtCoordinate(coordinateArray, board) {
+    let [xcoord, ycoord] = coordinateArray;
+    return board[ycoord][xcoord - 1];
+  }
+
+  function registerHit(hitCoordinateArray, gameboard = gameBoard) {
+    if (returnValueAtCoordinate(hitCoordinateArray, gameboard)) {
+      returnValueAtCoordinate(hitCoordinateArray, gameboard).hit();
+    }
   }
 
   function checkValidPlacement(coordinateArray) {
@@ -81,6 +90,7 @@ function gameBoardFactory() {
   return {
     returnBoardRepresentation,
     placeShip,
+    registerHit,
   };
 }
 

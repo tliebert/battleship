@@ -1,4 +1,9 @@
-import { returnOne, shipFactory, gameBoardFactory } from "./main.js";
+import {
+  returnOne,
+  shipFactory,
+  gameBoardFactory,
+  registerHit,
+} from "./main.js";
 
 test("returns the number one", () => {
   expect(returnOne()).toEqual(1);
@@ -123,7 +128,6 @@ describe("gameBoard Factory", () => {
       9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     };
-    console.log("threeship", threeShip);
     expect(
       gameBoardInstance.placeShip(
         [
@@ -135,5 +139,31 @@ describe("gameBoard Factory", () => {
     ).toEqual(threeShip);
   });
 
-  //
+  // recieve attack and determine if there was a hit, log that hit on the ship
+  // or records coordinates of missed shot
+
+  it("Recieves coordinates for a hit and calls hit on the ship at those coordinates", () => {
+    // incoming command message
+    // options: Mock correct ship
+    // pass the board as an argument?
+
+    let hitship = { hit: jest.fn() };
+    let hitshipboard = {
+      1: [hitship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    };
+
+    gameBoardInstance.registerHit([1, 1], hitshipboard);
+    expect(hitship.hit).toHaveBeenCalled();
+  });
+
+  it.todo("recieves an unsuccessful attack on a ship");
 });

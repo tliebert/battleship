@@ -76,9 +76,42 @@ function gameBoardFactory() {
   }
 
   function registerAttack(hitCoordinateArray, gameboard = gameBoard) {
-    if (returnValueAtCoordinate(hitCoordinateArray, gameboard)) {
-      returnValueAtCoordinate(hitCoordinateArray, gameboard).hit();
+    // if it has a hit method
+    let [xcoord, ycoord] = hitCoordinateArray;
+
+    let valueAtCoordinate = returnValueAtCoordinate(
+      hitCoordinateArray,
+      gameboard
+    );
+
+    if (valueAtCoordinate.hasOwnProperty("registerHit")) {
+      valueAtCoordinate.registerHit();
+    } else if (valueAtCoordinate === 0) {
+      gameBoard[ycoord][xcoord - 1] = "x";
     }
+
+    return gameBoard;
+  }
+
+  function everyShipSunkChecker(board = gameBoard) {
+    // iterate through the array and for every item if it has a isThisShipSunk method, call it
+    let response = true;
+    // find a ship that isn't sunk, break ant return false
+    for (const key in board) {
+      if (Object.hasOwnProperty(key)) {
+        let array = board[key];
+        for (let i = 0; i < array.length; i++) {
+          if (array[i].hasOwnProperty("isThisShipSunk")) {
+            if (array[i].isThisShipSunk()) {
+              continue;
+            } else {
+              return false;
+            }
+          }
+        }
+      }
+    }
+    return response;
   }
 
   function checkValidPlacement(coordinateArray) {
@@ -104,6 +137,7 @@ function gameBoardFactory() {
     returnBoardRepresentation,
     placeShip,
     registerAttack,
+    everyShipSunkChecker,
   };
 }
 

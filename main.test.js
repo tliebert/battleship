@@ -126,7 +126,7 @@ describe("gameBoard Factory", () => {
     // options: Mock correct ship
     // pass the board as an argument?
 
-    let hitship = { hit: jest.fn() };
+    let hitship = { registerHit: jest.fn() };
     let hitshipboard = {
       1: [hitship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -141,8 +141,40 @@ describe("gameBoard Factory", () => {
     };
 
     gameBoardInstance.registerAttack([1, 1], hitshipboard);
-    expect(hitship.hit).toHaveBeenCalled();
+    expect(hitship.registerHit).toHaveBeenCalled();
   });
 
-  it.todo("recieves an unsuccessful attack on a ship");
+  it("recieves an unsuccessful attack on a ship and logs it was missed", () => {
+    let missboard = {
+      1: ["x", 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    };
+    expect(gameBoardInstance.registerAttack([1, 1])).toEqual(missboard);
+  });
+
+  it("checks if all ships are sunk", () => {
+    let sunkship = { isThisShipSunk: () => true };
+    let sunkshipboard = {
+      1: [sunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    };
+
+    expect(gameBoardInstance.everyShipSunkChecker(sunkshipboard)).toBe(true);
+  });
 });

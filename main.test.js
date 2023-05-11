@@ -3,6 +3,7 @@ import {
   shipFactory,
   gameBoardFactory,
   registerAttack,
+  playerFactory,
 } from "./main.js";
 
 test("returns the number one", () => {
@@ -162,6 +163,7 @@ describe("gameBoard Factory", () => {
 
   it("checks if all ships are sunk", () => {
     let sunkship = { isThisShipSunk: () => true };
+    let unsunkship = { isThisShipSunk: () => false };
     let sunkshipboard = {
       1: [sunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -172,9 +174,16 @@ describe("gameBoard Factory", () => {
       7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [unsunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     };
 
-    expect(gameBoardInstance.everyShipSunkChecker(sunkshipboard)).toBe(true);
+    expect(gameBoardInstance.everyShipSunkChecker(sunkshipboard)).toBe(false);
+  });
+
+  describe("player Factory", () => {
+    it("returns player object", () => {
+      let playermock = { name: "Thomas" };
+      expect(playerFactory("Thomas")).toEqual(playermock);
+    });
   });
 });

@@ -98,13 +98,15 @@ function gameBoardFactory() {
     let response = true;
     // find a ship that isn't sunk, break ant return false
     for (const key in board) {
-      if (Object.hasOwnProperty(key)) {
+      if (board.hasOwnProperty(key)) {
         let array = board[key];
         for (let i = 0; i < array.length; i++) {
           if (array[i].hasOwnProperty("isThisShipSunk")) {
             if (array[i].isThisShipSunk()) {
+              console.log("continuing");
               continue;
             } else {
+              console.log("it's false");
               return false;
             }
           }
@@ -141,8 +143,19 @@ function gameBoardFactory() {
   };
 }
 
+// returns player object
+// player should be be able to attack squares
+// ai player should have funtion that makes legal random move given gameboard
+
+function playerFactory(name) {
+  return {
+    name,
+  };
+}
+
 module.exports = {
   shipFactory,
   returnOne,
   gameBoardFactory,
+  playerFactory,
 };

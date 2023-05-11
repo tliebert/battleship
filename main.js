@@ -95,27 +95,32 @@ function gameBoardFactory() {
     return gameBoard;
   }
 
-  function everyShipSunkChecker(board = gameBoard) {
-    // iterate through the array and for every item if it has a isThisShipSunk method, call it
-    let response = true;
-    // find a ship that isn't sunk, break ant return false
+  function returnArrayOfAllBoardValues(board = gameBoard) {
+    let allvalues = [];
     for (const key in board) {
       if (board.hasOwnProperty(key)) {
         let array = board[key];
         for (let i = 0; i < array.length; i++) {
-          if (array[i].hasOwnProperty("isThisShipSunk")) {
-            if (array[i].isThisShipSunk()) {
-              console.log("continuing");
-              continue;
-            } else {
-              console.log("it's false");
-              return false;
-            }
-          }
+          allvalues.push(array[i]);
         }
       }
     }
-    return response;
+    return allvalues;
+  }
+
+  //ship is sunk
+
+  function everyShipSunkChecker(board = gameBoard) {
+    // iterate through the array and for every item if it has a isThisShipSunk method, call it
+    return returnArrayOfAllBoardValues(board).every((item) => {
+      if (!item.hasOwnProperty("isThisShipSunk")) {
+        return true;
+      }
+      if (item.hasOwnProperty("isThisShipSunk") && !item.isThisShipSunk()) {
+        return false;
+      }
+      return true;
+    });
   }
 
   function canCoordinateBeHit(coordinateArray, board = gameBoard) {
@@ -145,6 +150,9 @@ function gameBoardFactory() {
   function returnBoardRepresentation() {
     return gameBoard;
   }
+
+  function returnListOfHittableCoordinates(board = gameBoard) {}
+
   return {
     returnBoardRepresentation,
     placeShip,
@@ -169,19 +177,8 @@ function playerFactory(name, ai = false) {
     return [xcoord, ycoord];
   }
 
-  function makeRandomAttack(board, attackCoordinates = randomCoordinates()) {
-    let tries = 0;
-
-    while (!board.canCoordinateBeHit(attackCoordinates) && tries <= 100) {
-      attackCoordinates = randomCoordinates();
-      tries += 1;
-    }
-    registerAttack(attackCoordinates, board);
-    if (tries === 100) {
-      tries = 0;
-      return false;
-    }
-    return board;
+  function makeRandomAttack(board) {
+    let possibleCoordinates = board.returnListOfHittableCoordinates();
   }
 
   return {

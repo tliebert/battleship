@@ -164,20 +164,25 @@ describe("gameBoard Factory", () => {
   it("checks if all ships are sunk", () => {
     let sunkship = { isThisShipSunk: () => true };
     let unsunkship = { isThisShipSunk: () => false };
-    let sunkshipboard = {
+    let somesunkshipboard = {
       1: [sunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       10: [unsunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     };
-
-    expect(gameBoardInstance.everyShipSunkChecker(sunkshipboard)).toBe(false);
+    let allsunkshipboard = {
+      1: [sunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [sunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    };
+    let nonesunkshipboard = {
+      1: [unsunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [unsunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    };
+    expect(gameBoardInstance.everyShipSunkChecker(allsunkshipboard)).toBe(true);
+    expect(gameBoardInstance.everyShipSunkChecker(somesunkshipboard)).toBe(
+      false
+    );
+    expect(gameBoardInstance.everyShipSunkChecker(nonesunkshipboard)).toBe(
+      false
+    );
   });
 });
 
@@ -202,17 +207,23 @@ describe("player Factory", () => {
     expect(playerFactory("robot", true)).toHaveProperty("makeRandomAttack");
   });
 
-  it("sends an attack after checking if coordinates can be hit", () => {
-    let testObject = {
-      canCoordinateBeHit: () => {
-        true;
+  it("sends a random attack when given a board", () => {
+    let mockboard = {
+      returnListOfHittableCoordinates: () => {
+        return [[1, 1]];
       },
       registerAttack: jest.fn(),
-      pongo: jest.fn(),
     };
-    const robotPlayer = playerFactory("Robot", true);
-    robotPlayer.makeRandomAttack(testObject);
-    expect(testObject.pongo).not.toHaveBeenCalled();
-    expect(testObject.registerAttack).toHaveBeenCalled();
+    let player = playerFactory("Robot", true);
+    player.makeRandomAttack(mockboard);
+    expect(mockboard.registerAttack).toHaveBeenCalled();
+    expect(mockboard.registerAttack).toHaveBeenCalledWith([1, 1]);
   });
 });
+
+//options:
+/* 
+it's random, so 100 tries might not work. 
+Better to just return "hittables, then pick from those and send back"
+
+*/

@@ -88,6 +88,8 @@ function gameBoardFactory() {
       valueAtCoordinate.registerHit();
     } else if (valueAtCoordinate === 0) {
       gameBoard[ycoord][xcoord - 1] = "x";
+    } else if (valueAtCoordinate === "x") {
+      return false;
     }
 
     return gameBoard;
@@ -147,9 +149,20 @@ function gameBoardFactory() {
 // player should be be able to attack squares
 // ai player should have funtion that makes legal random move given gameboard
 
-function playerFactory(name) {
+function playerFactory(name, ai = false) {
+  function registerAttack(coordinateArray, board) {
+    return board.registerAttack(coordinateArray);
+  }
+
+  function makeRandomAttack(board) {}
+
+  if (ai) {
+    return { name, registerAttack, makeRandomAttack };
+  }
+
   return {
     name,
+    registerAttack,
   };
 }
 

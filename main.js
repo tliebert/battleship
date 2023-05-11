@@ -118,6 +118,14 @@ function gameBoardFactory() {
     return response;
   }
 
+  function canCoordinateBeHit(coordinateArray, board = gameBoard) {
+    if (returnValueAtCoordinate(coordinateArray, board) === "x") {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   function checkValidPlacement(coordinateArray) {
     // checks if the placement is allowed.
     let [startxcoord, startycoord] = coordinateArray[0];
@@ -142,6 +150,7 @@ function gameBoardFactory() {
     placeShip,
     registerAttack,
     everyShipSunkChecker,
+    canCoordinateBeHit,
   };
 }
 
@@ -154,15 +163,31 @@ function playerFactory(name, ai = false) {
     return board.registerAttack(coordinateArray);
   }
 
-  function makeRandomAttack(board) {}
+  function randomCoordinates() {
+    const xcoord = 1 + Math.floor(Math.random() * 10);
+    const ycoord = 1 + Math.floor(Math.random() * 10);
+    return [xcoord, ycoord];
+  }
 
-  if (ai) {
-    return { name, registerAttack, makeRandomAttack };
+  function makeRandomAttack(board, attackCoordinates = randomCoordinates()) {
+    let tries = 0;
+
+    while (!board.canCoordinateBeHit(attackCoordinates) && tries <= 100) {
+      attackCoordinates = randomCoordinates();
+      tries += 1;
+    }
+    registerAttack(attackCoordinates, board);
+    if (tries === 100) {
+      tries = 0;
+      return false;
+    }
+    return board;
   }
 
   return {
     name,
     registerAttack,
+    makeRandomAttack,
   };
 }
 

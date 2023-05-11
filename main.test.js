@@ -179,26 +179,40 @@ describe("gameBoard Factory", () => {
 
     expect(gameBoardInstance.everyShipSunkChecker(sunkshipboard)).toBe(false);
   });
+});
 
-  describe("player Factory", () => {
-    it("returns player object with correct properties", () => {
-      let playermock = { name: "Thomas", registerAttack: () => {} };
-      let player2mock = { name: "Dan", registerAttack: () => {} };
-      expect(playerFactory("Thomas")).toHaveProperty("registerAttack");
-      expect(playerFactory("Dan").name).toMatch("Dan");
-    });
-
-    it("can send an attack to a game board", () => {
-      // board that recieves message
-      // when given board, player object sucessfully sends message
-      let newPlayer = playerFactory("testname");
-      let board = { registerAttack: jest.fn() };
-      newPlayer.registerAttack([1, 1], board);
-      expect(board.registerAttack()).toHaveBeenCalled;
-    });
+describe("player Factory", () => {
+  it("returns player object with correct properties", () => {
+    let playermock = { name: "Thomas", registerAttack: () => {} };
+    let player2mock = { name: "Dan", registerAttack: () => {} };
+    expect(playerFactory("Thomas")).toHaveProperty("registerAttack");
+    expect(playerFactory("Dan").name).toMatch("Dan");
   });
 
-  it("if passed true argument, initializes with a make random move function", () => {
+  it("can send an attack to a game board", () => {
+    // board that recieves message
+    // when given board, player object sucessfully sends message
+    let newPlayer = playerFactory("testname");
+    let board = { registerAttack: jest.fn() };
+    newPlayer.registerAttack([1, 1], board);
+    expect(board.registerAttack).toHaveBeenCalled();
+  });
+
+  it("initializes with a make random move function if passed ai argument is true", () => {
     expect(playerFactory("robot", true)).toHaveProperty("makeRandomAttack");
+  });
+
+  it("sends an attack after checking if coordinates can be hit", () => {
+    let testObject = {
+      canCoordinateBeHit: () => {
+        true;
+      },
+      registerAttack: jest.fn(),
+      pongo: jest.fn(),
+    };
+    const robotPlayer = playerFactory("Robot", true);
+    robotPlayer.makeRandomAttack(testObject);
+    expect(testObject.pongo).not.toHaveBeenCalled();
+    expect(testObject.registerAttack).toHaveBeenCalled();
   });
 });

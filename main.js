@@ -151,7 +151,11 @@ function gameBoardFactory() {
     return gameBoard;
   }
 
-  function returnListOfHittableCoordinates(board = gameBoard) {}
+  function returnListOfHittableCoordinates(board = gameBoard) {
+    const hittableCoordinates = returnArrayOfAllBoardValues(board).filter(
+      (itemAtCoordinate) => {}
+    );
+  }
 
   return {
     returnBoardRepresentation,

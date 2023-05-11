@@ -128,7 +128,22 @@ describe("gameBoard Factory", () => {
     // pass the board as an argument?
 
     let hitship = { registerHit: jest.fn() };
-    let hitshipboard = {
+    let shipboard = {
+      1: [hitship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    };
+
+    gameBoardInstance.registerAttack([1, 1], shipboard);
+    expect(hitship.registerHit).toHaveBeenCalled();
+  });
+
+  it("Changes board to reflect hit after recieving attack", () => {
+    let hitship = {
+      registerHit: () => {
+        console.log("been hit");
+      },
+    };
+
+    let shipboard = {
       1: [hitship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -141,8 +156,22 @@ describe("gameBoard Factory", () => {
       10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     };
 
-    gameBoardInstance.registerAttack([1, 1], hitshipboard);
-    expect(hitship.registerHit).toHaveBeenCalled();
+    let hitboard = {
+      1: ["Hit", 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    };
+
+    expect(gameBoardInstance.registerAttack([1, 1], shipboard)).toEqual(
+      hitboard
+    );
   });
 
   it("recieves an unsuccessful attack on a ship and logs it was missed", () => {

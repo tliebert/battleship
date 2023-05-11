@@ -86,13 +86,14 @@ function gameBoardFactory() {
 
     if (valueAtCoordinate.hasOwnProperty("registerHit")) {
       valueAtCoordinate.registerHit();
+      gameboard[ycoord][xcoord - 1] = "Hit";
     } else if (valueAtCoordinate === 0) {
-      gameBoard[ycoord][xcoord - 1] = "x";
+      gameboard[ycoord][xcoord - 1] = "x";
     } else if (valueAtCoordinate === "x") {
       return false;
     }
 
-    return gameBoard;
+    return gameboard;
   }
 
   function returnArrayOfAllBoardValues(board = gameBoard) {

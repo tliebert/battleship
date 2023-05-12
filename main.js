@@ -225,6 +225,11 @@ function mainGameLoop() {
     }
     return players;
   }
+
+  // storing gameboards... make one for each player
+
+  makeGameboards();
+
   return {
     addPlayer,
   };

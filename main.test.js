@@ -266,6 +266,12 @@ describe("player Factory", () => {
 });
 
 describe("main game loop", () => {
+  let gameLoop = mainGameLoop();
+
+  beforeEach(() => {
+    gameLoop = mainGameLoop();
+  });
+
   it("creates different players", () => {
     let testplayer = {
       name: "Thomas",

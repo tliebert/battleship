@@ -96,21 +96,6 @@ function gameBoardFactory() {
     return gameboard;
   }
 
-  function returnArrayOfAllBoardValues(board = gameBoard) {
-    let allvalues = [];
-    for (const key in board) {
-      if (board.hasOwnProperty(key)) {
-        let array = board[key];
-        for (let i = 0; i < array.length; i++) {
-          allvalues.push(array[i]);
-        }
-      }
-    }
-    return allvalues;
-  }
-
-  //ship is sunk
-
   function everyShipSunkChecker(board = gameBoard) {
     // iterate through the array and for every item if it has a isThisShipSunk method, call it
     return returnArrayOfAllBoardValues(board).every((item) => {
@@ -132,6 +117,34 @@ function gameBoardFactory() {
     }
   }
 
+  function returnBoardRepresentation() {
+    return gameBoard;
+  }
+
+  function returnListOfHittableCoordinates(board = gameBoard) {
+    const hittableCoordinates = returnArrayOfAllBoardValues(board).filter(
+      (itemAtCoordinate) => {
+        itemAtCoordinate !== "Hit";
+      }
+    );
+    return hittableCoordinates;
+  }
+
+  // internal helper function
+
+  function returnArrayOfAllBoardValues(board = gameBoard) {
+    let allvalues = [];
+    for (const key in board) {
+      if (board.hasOwnProperty(key)) {
+        let array = board[key];
+        for (let i = 0; i < array.length; i++) {
+          allvalues.push(array[i]);
+        }
+      }
+    }
+    return allvalues;
+  }
+
   function checkValidPlacement(coordinateArray) {
     // checks if the placement is allowed.
     let [startxcoord, startycoord] = coordinateArray[0];
@@ -148,22 +161,13 @@ function gameBoardFactory() {
     return Math.abs(startycoord - endycoord);
   }
 
-  function returnBoardRepresentation() {
-    return gameBoard;
-  }
-
-  function returnListOfHittableCoordinates(board = gameBoard) {
-    const hittableCoordinates = returnArrayOfAllBoardValues(board).filter(
-      (itemAtCoordinate) => {}
-    );
-  }
-
   return {
     returnBoardRepresentation,
     placeShip,
     registerAttack,
     everyShipSunkChecker,
     canCoordinateBeHit,
+    returnListOfHittableCoordinates,
   };
 }
 

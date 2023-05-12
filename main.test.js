@@ -213,6 +213,14 @@ describe("gameBoard Factory", () => {
       false
     );
   });
+
+  it("returns a list of hittable coordinates", () => {
+    let stubboard = {
+      1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    };
+    expect;
+  });
 });
 
 describe("player Factory", () => {

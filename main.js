@@ -122,26 +122,43 @@ function gameBoardFactory() {
   }
 
   function returnListOfHittableCoordinates(board = gameBoard) {
-    const hittableCoordinates = returnArrayOfAllBoardValues(board).filter(
-      (itemAtCoordinate) => {
-        itemAtCoordinate !== "Hit";
+    let arrayOfHittableCoordinates = [];
+    function isHittable(item, key, index) {
+      if (item !== "Hit" && item !== "x") {
+        arrayOfHittableCoordinates.push([parseInt(key), index + 1]);
       }
-    );
-    return hittableCoordinates;
+    }
+    callFunctionOnEachCoordinate(board, isHittable);
+    return arrayOfHittableCoordinates;
   }
 
   // internal helper function
 
-  function returnArrayOfAllBoardValues(board = gameBoard) {
-    let allvalues = [];
+  // given a board, loop through each value. Callback function accepts parameters
+  // for the value at coordinate of an arbitrary size array, then the y coordinate aka
+  // key for the object, and finally the x-coordinate, aka the index in the array.
+  function callFunctionOnEachCoordinate(board = gameBoard, callback) {
     for (const key in board) {
       if (board.hasOwnProperty(key)) {
         let array = board[key];
         for (let i = 0; i < array.length; i++) {
-          allvalues.push(array[i]);
+          callback(array[i], key, i);
         }
       }
     }
+  }
+
+  // example callback for callFunctionOnEachCoordinate function
+  function demologgerCallback(value, key, index) {
+    console.log(value, key, index);
+  }
+
+  function returnArrayOfAllBoardValues(board = gameBoard) {
+    let allvalues = [];
+    function pusher(item) {
+      allvalues.push(item);
+    }
+    callFunctionOnEachCoordinate(board, pusher);
     return allvalues;
   }
 

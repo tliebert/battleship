@@ -215,11 +215,17 @@ describe("gameBoard Factory", () => {
   });
 
   it("returns a list of hittable coordinates", () => {
+    let unsunkship = { isThisShipSunk: () => false };
     let stubboard = {
-      1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      1: ["Hit", 0],
+      2: [unsunkship, "x"],
     };
-    expect;
+    expect(
+      gameBoardInstance.returnListOfHittableCoordinates(stubboard)
+    ).toEqual([
+      [1, 2],
+      [2, 1],
+    ]);
   });
 });
 

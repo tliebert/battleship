@@ -205,6 +205,8 @@ function playerFactory(name, ai = false) {
 
   function makeRandomAttack(board) {
     let possibleCoordinates = board.returnListOfHittableCoordinates();
+    let randomIndex = Math.floor(Math.random() * possibleCoordinates.length);
+    board.registerAttack(possibleCoordinates[randomIndex]);
   }
 
   return {

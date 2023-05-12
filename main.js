@@ -217,6 +217,8 @@ function playerFactory(name, ai = false) {
 
 function mainGameLoop() {
   let playerArray = [];
+  const gameboardsArray = [];
+
   function addPlayer(players = playerArray, player, name) {
     if (player) {
       players.push(player);
@@ -227,11 +229,23 @@ function mainGameLoop() {
   }
 
   // storing gameboards... make one for each player
+  // create wrapper object with player and gameboard keys, each with their own
+  // factory.
+  // each board wrapper just makes it. Doesn't need to associate it.
 
-  makeGameboards();
+  function makeGameboardsForEachPlayer(
+    players = playerArray,
+    boardMakerFactory = gameBoardFactory(),
+    gameboards = gameboardsArray
+  ) {
+    return (gameboards = players.map((playerObj) => {
+      return { player: playerObj, board: boardMakerFactory() };
+    }));
+  }
 
   return {
     addPlayer,
+    makeGameboardsForEachPlayer,
   };
 }
 

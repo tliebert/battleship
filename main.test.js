@@ -285,6 +285,32 @@ describe("main game loop", () => {
       playersAfter
     );
   });
+  it("creates a gameboard for each player", () => {
+    let mockplayers = [{ name: "One" }, { name: "Two" }];
+    let mockfactory = () => {
+      return {
+        board: "I am a board",
+      };
+    };
+    let mockboards = [];
+    let resultgameboards = [
+      {
+        player: { name: "One" },
+        board: {
+          board: "I am a board",
+        },
+      },
+      {
+        player: { name: "Two" },
+        board: {
+          board: "I am a board",
+        },
+      },
+    ];
+    expect(
+      gameLoop.makeGameboardsForEachPlayer(mockplayers, mockfactory, mockboards)
+    ).toEqual(resultgameboards);
+  });
 });
 
 //options:

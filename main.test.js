@@ -258,7 +258,7 @@ describe("player Factory", () => {
       registerAttack: jest.fn(),
     };
     let player = playerFactory("Robot", true);
-    player.makeRandomAttack(mockboard);
+    player.makeRandomAttack(mockboard, 1);
     expect(mockboard.registerAttack).toHaveBeenCalled();
     expect(mockboard.registerAttack).toHaveBeenCalledWith([1, 1]);
   });

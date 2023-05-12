@@ -203,10 +203,15 @@ function playerFactory(name, ai = false) {
     return [xcoord, ycoord];
   }
 
-  function makeRandomAttack(board) {
+  function makeRandomAttack(board, randomIndex) {
     let possibleCoordinates = board.returnListOfHittableCoordinates();
-    let randomIndex = Math.floor(Math.random() * possibleCoordinates.length);
-    board.registerAttack(possibleCoordinates[randomIndex]);
+    let arrayIndex;
+    if (randomIndex) {
+      arrayIndex = randomIndex;
+    } else {
+      arrayIndex = Math.floor(Math.random() * possibleCoordinates.length);
+    }
+    board.registerAttack(possibleCoordinates[arrayIndex]);
   }
 
   return {

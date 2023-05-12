@@ -197,12 +197,6 @@ function playerFactory(name, ai = false) {
     return board.registerAttack(coordinateArray);
   }
 
-  function randomCoordinates() {
-    const xcoord = 1 + Math.floor(Math.random() * 10);
-    const ycoord = 1 + Math.floor(Math.random() * 10);
-    return [xcoord, ycoord];
-  }
-
   function makeRandomAttack(board, randomIndex) {
     let possibleCoordinates = board.returnListOfHittableCoordinates();
     let arrayIndex;
@@ -221,9 +215,25 @@ function playerFactory(name, ai = false) {
   };
 }
 
+function mainGameLoop() {
+  let playerArray = [];
+  function addPlayer(players = playerArray, player, name) {
+    if (player) {
+      players.push(player);
+    } else {
+      players.push(playerFactory(name, true));
+    }
+    return players;
+  }
+  return {
+    addPlayer,
+  };
+}
+
 module.exports = {
   shipFactory,
   returnOne,
   gameBoardFactory,
   playerFactory,
+  mainGameLoop,
 };

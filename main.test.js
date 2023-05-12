@@ -4,6 +4,7 @@ import {
   gameBoardFactory,
   registerAttack,
   playerFactory,
+  mainGameLoop,
 } from "./main.js";
 
 test("returns the number one", () => {
@@ -258,9 +259,25 @@ describe("player Factory", () => {
       registerAttack: jest.fn(),
     };
     let player = playerFactory("Robot", true);
-    player.makeRandomAttack(mockboard, 1);
+    player.makeRandomAttack(mockboard, 0);
     expect(mockboard.registerAttack).toHaveBeenCalled();
     expect(mockboard.registerAttack).toHaveBeenCalledWith([1, 1]);
+  });
+});
+
+describe("main game loop", () => {
+  it("creates different players", () => {
+    let testplayer = {
+      name: "Thomas",
+    };
+    let testplayer2 = {
+      name: "Joe",
+    };
+    let playersBefore = [testplayer];
+    let playersAfter = [testplayer, testplayer2];
+    expect(gameLoop.addPlayer(playersBefore, testplayer2)).toEqual(
+      playersAfter
+    );
   });
 });
 

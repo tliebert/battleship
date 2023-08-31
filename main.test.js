@@ -120,6 +120,8 @@ describe("gameBoard Factory", () => {
     ).toEqual(threeShip);
   });
 
+  it.todo("rejects a ship placement if overlapping other ship");
+
   // recieve attack and determine if there was a hit, log that hit on the ship
   // or records coordinates of missed shot
 

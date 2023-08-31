@@ -228,10 +228,40 @@ function mainGameLoop() {
     return players;
   }
 
-  // storing gameboards... make one for each player
-  // create wrapper object with player and gameboard keys, each with their own
-  // factory.
-  // each board wrapper just makes it. Doesn't need to associate it.
+  const defaultShipCoordinates = [
+    [
+      [1, 1],
+      [1, 3],
+    ],
+    [
+      [1, 4],
+      [1, 6],
+    ],
+    [
+      [8, 10],
+      [10, 10],
+    ],
+    [
+      [5, 5],
+      [5, 5],
+    ],
+    [
+      [8, 9],
+      [10, 9],
+    ],
+  ];
+
+  function populateEachBoard(
+    gameboards = gameboardsArray,
+    allCoordinates = defaultShipCoordinates
+  ) {
+    gameboardsArray.forEach((playerAndBoardWrapper) => {
+      allCoordinates.forEach((coordinatePair) => {
+        playerAndBoardWrapper.board.placeShip(coordinatePair);
+      });
+    });
+    return gameboards;
+  }
 
   function makeGameboardsForEachPlayer(
     players = playerArray,
@@ -246,6 +276,7 @@ function mainGameLoop() {
   return {
     addPlayer,
     makeGameboardsForEachPlayer,
+    populateEachBoard,
   };
 }
 

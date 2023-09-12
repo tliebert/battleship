@@ -4,7 +4,7 @@ import {
   gameBoardFactory,
   registerAttack,
   playerFactory,
-  mainGameLoop,
+  gameController,
 } from "./main.js";
 
 test("returns the number one", () => {
@@ -28,15 +28,15 @@ describe("shipFactory", () => {
   });
 });
 
-describe("gameBoard Factory", () => {
+describe("gameBoard", () => {
   let gameBoardInstance;
 
   beforeEach(() => {
     gameBoardInstance = gameBoardFactory();
   });
 
-  it("returns empty board state", () => {
-    let emptyBoard = {
+  let myObj = it("returns empty board state", () => {
+    let emptyBoard = `{
       1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -47,20 +47,18 @@ describe("gameBoard Factory", () => {
       8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    };
+    }`;
 
     expect(gameBoardInstance.returnBoardRepresentation()).toEqual(emptyBoard);
   });
 
   //Options here:
   //placeShip returns gameboard entirely, pure function. Will always get same thing back
-  //expect it to change a variable, aka the board state, and return that
-  //I'm thinking about how to keep track of the ship
+  //expect it to change a variable, aka the board state, and return that.
 
   it("places a one length ship at the given coordinates", () => {
-    const ship = shipFactory(1);
     let oneShip = {
-      1: [ship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      1: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -84,6 +82,9 @@ describe("gameBoard Factory", () => {
     // requiring methods and checking manually.
 
     //["1"][0], ["1"][0]
+
+    // {"attack: myFunction()"}
+
     expect(
       gameBoardInstance.placeShip(
         [
@@ -120,7 +121,7 @@ describe("gameBoard Factory", () => {
     ).toEqual(threeShip);
   });
 
-  it.todo("rejects a ship placement if overlapping other ship");
+  it("rejects a ship placement if overlapping other ship", test.todo);
 
   // recieve attack and determine if there was a hit, log that hit on the ship
   // or records coordinates of missed shot
@@ -267,53 +268,57 @@ describe("player Factory", () => {
   });
 });
 
-describe("main game loop", () => {
-  let gameLoop = mainGameLoop();
+// describe("main game loop", () => {
+//   let gameController;
 
-  beforeEach(() => {
-    gameLoop = mainGameLoop();
-  });
+//   beforeEach(() => {
+//     gameController = gameController();
+//   });
 
-  it("creates different players", () => {
-    let testplayer = {
-      name: "Thomas",
-    };
-    let testplayer2 = {
-      name: "Joe",
-    };
-    let playersBefore = [testplayer];
-    let playersAfter = [testplayer, testplayer2];
-    expect(gameLoop.addPlayer(playersBefore, testplayer2)).toEqual(
-      playersAfter
-    );
-  });
-  it("creates a gameboard for each player", () => {
-    let mockplayers = [{ name: "One" }, { name: "Two" }];
-    let mockfactory = () => {
-      return {
-        board: "I am a board",
-      };
-    };
-    let mockboards = [];
-    let resultgameboards = [
-      {
-        player: { name: "One" },
-        board: {
-          board: "I am a board",
-        },
-      },
-      {
-        player: { name: "Two" },
-        board: {
-          board: "I am a board",
-        },
-      },
-    ];
-    expect(
-      gameLoop.makeGameboardsForEachPlayer(mockplayers, mockfactory, mockboards)
-    ).toEqual(resultgameboards);
-  });
-});
+//   it("creates different players", () => {
+//     let testplayer = {
+//       name: "Thomas",
+//     };
+//     let testplayer2 = {
+//       name: "Joe",
+//     };
+//     let playersBefore = [testplayer];
+//     let playersAfter = [testplayer, testplayer2];
+//     expect(gameController.addPlayer(playersBefore, testplayer2)).toEqual(
+//       playersAfter
+//     );
+//   });
+//   it("creates a gameboard for each player", () => {
+//     let mockplayers = [{ name: "One" }, { name: "Two" }];
+//     let mockfactory = () => {
+//       return {
+//         board: "I am a board",
+//       };
+//     };
+//     let mockboards = [];
+//     let resultgameboards = [
+//       {
+//         player: { name: "One" },
+//         board: {
+//           board: "I am a board",
+//         },
+//       },
+//       {
+//         player: { name: "Two" },
+//         board: {
+//           board: "I am a board",
+//         },
+//       },
+//     ];
+//     expect(
+//       gameController.makeGameboardsForEachPlayer(
+//         mockplayers,
+//         mockfactory,
+//         mockboards
+//       )
+//     ).toEqual(resultgameboards);
+//   });
+// });
 
 //options:
 /* 

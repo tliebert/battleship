@@ -1,7 +1,10 @@
+// DOM Funcctions
+
+// Game Logic
+
 function returnOne() {
   return 1;
 }
-
 //if functions outside of ship factory were defined, would it work.
 
 function shipFactory(length) {
@@ -44,13 +47,16 @@ function makeEmptyBoard() {
 function gameBoardFactory() {
   const gameBoard = makeEmptyBoard();
 
-  function placeShip(startEndCoordinateArray, ship) {
+  const ships = [];
+
+  function placeShip(startEndCoordinateArray) {
     let [startxcoord, startycoord] = startEndCoordinateArray[0];
     let [endxcoord, endycoord] = startEndCoordinateArray[1];
-
-    let privateShip = ship
-      ? ship
-      : shipFactory(deriveShipLengthFromCoordinates(startEndCoordinateArray));
+    let ship = shipFactory(
+      deriveShipLengthFromCoordinates(startEndCoordinateArray)
+    );
+    let shipnumber = ships.length + 1;
+    ships.push(ship);
 
     // Expects an array of arrays, with each sub array containing an x and y coordinate
 
@@ -58,11 +64,11 @@ function gameBoardFactory() {
       if (startxcoord !== endxcoord) {
         // take y axis and iterate through that array
         for (let i = startxcoord; i <= endxcoord; i++) {
-          gameBoard[startycoord][i - 1] = privateShip;
+          gameBoard[startycoord][i - 1] = shipnumber;
         }
       } else {
         for (let i = startycoord; i <= endycoord; i++) {
-          gameBoard[i][startxcoord - 1] = privateShip;
+          gameBoard[i][startxcoord - 1] = shipnumber;
         }
       }
     }
@@ -70,47 +76,33 @@ function gameBoardFactory() {
     return gameBoard;
   }
 
-  function returnValueAtCoordinate(coordinateArray, board) {
+  function returnValueAtCoordinate(coordinateArray) {
     let [xcoord, ycoord] = coordinateArray;
-    return board[ycoord][xcoord - 1];
+    return gameBoard[ycoord][xcoord - 1];
   }
 
-  function registerAttack(hitCoordinateArray, gameboard = gameBoard) {
-    // if it has a hit method
+  function registerAttack(hitCoordinateArray) {
     let [xcoord, ycoord] = hitCoordinateArray;
 
     let valueAtCoordinate = returnValueAtCoordinate(
       hitCoordinateArray,
-      gameboard
+      gameBoard
     );
 
-    if (valueAtCoordinate.hasOwnProperty("registerHit")) {
-      valueAtCoordinate.registerHit();
-      gameboard[ycoord][xcoord - 1] = "Hit";
+    if ((valueAtCoordinate = "Hit")) {
+      throw new Error("already hit, shoulnd't be allowed to hit there");
     } else if (valueAtCoordinate === 0) {
-      gameboard[ycoord][xcoord - 1] = "x";
-    } else if (valueAtCoordinate === "x") {
-      return false;
-    }
-
-    return gameboard;
-  }
-
-  function everyShipSunkChecker(board = gameBoard) {
-    // iterate through the array and for every item if it has a isThisShipSunk method, call it
-    return returnArrayOfAllBoardValues(board).every((item) => {
-      if (!item.hasOwnProperty("isThisShipSunk")) {
-        return true;
-      }
-      if (item.hasOwnProperty("isThisShipSunk") && !item.isThisShipSunk()) {
-        return false;
-      }
+      gameBoard[ycoord][xcoord - 1] = "Miss";
+    } else if (typeof valueAtCoordinate === "number" && valueAtCoordinate < 0) {
+      valueAtCoordinate.registerHit();
       return true;
-    });
+    }
   }
 
-  function canCoordinateBeHit(coordinateArray, board = gameBoard) {
-    if (returnValueAtCoordinate(coordinateArray, board) === "x") {
+  function everyShipSunkChecker() {}
+
+  function canCoordinateBeHit(coordinateArray) {
+    if (returnValueAtCoordinate(coordinateArray, gameBoard) === 0) {
       return false;
     } else {
       return true;
@@ -121,25 +113,26 @@ function gameBoardFactory() {
     return gameBoard;
   }
 
-  function returnListOfHittableCoordinates(board = gameBoard) {
-    let arrayOfHittableCoordinates = [];
-    function isHittable(item, key, index) {
-      if (item !== "Hit" && item !== "x") {
-        arrayOfHittableCoordinates.push([parseInt(key), index + 1]);
-      }
-    }
-    callFunctionOnEachCoordinate(board, isHittable);
-    return arrayOfHittableCoordinates;
-  }
+  // function returnListOfHittableCoordinates() {
+  //   let arrayOfHittableCoordinates = [];
+  //   function isHittable(item, key, index) {
+  //     if (item !== "Hit" && item !== "x") {
+  //       arrayOfHittableCoordinates.push([parseInt(key), index + 1]);
+  //     }
+  //   }
+  //   callFunctionOnEachCoordinate(board, isHittable);
+  //   return arrayOfHittableCoordinates;
+  // }
 
   // internal helper function
 
   // given a board, loop through each value. Callback function accepts parameters
   // for the value at coordinate of an arbitrary size array, then the y coordinate aka
   // key for the object, and finally the x-coordinate, aka the index in the array.
-  function callFunctionOnEachCoordinate(board = gameBoard, callback) {
+
+  function callFunctionOnEachCoordinate(callback) {
     for (const key in board) {
-      if (board.hasOwnProperty(key)) {
+      if (gameBoard.hasOwnProperty(key)) {
         let array = board[key];
         for (let i = 0; i < array.length; i++) {
           callback(array[i], key, i);
@@ -148,12 +141,7 @@ function gameBoardFactory() {
     }
   }
 
-  // example callback for callFunctionOnEachCoordinate function
-  function demologgerCallback(value, key, index) {
-    console.log(value, key, index);
-  }
-
-  function returnArrayOfAllBoardValues(board = gameBoard) {
+  function returnArrayOfAllBoardValues() {
     let allvalues = [];
     function pusher(item) {
       allvalues.push(item);
@@ -185,6 +173,7 @@ function gameBoardFactory() {
     everyShipSunkChecker,
     canCoordinateBeHit,
     returnListOfHittableCoordinates,
+    board,
   };
 }
 
@@ -192,76 +181,37 @@ function gameBoardFactory() {
 // player should be be able to attack squares
 // ai player should have funtion that makes legal random move given gameboard
 
-function playerFactory(name, ai = false) {
+function playerFactory(name) {
   function registerAttack(coordinateArray, board) {
     return board.registerAttack(coordinateArray);
-  }
-
-  function makeRandomAttack(board, randomIndex) {
-    let possibleCoordinates = board.returnListOfHittableCoordinates();
-    let arrayIndex;
-    if (randomIndex) {
-      arrayIndex = randomIndex;
-    } else {
-      arrayIndex = Math.floor(Math.random() * possibleCoordinates.length);
-    }
-    board.registerAttack(possibleCoordinates[arrayIndex]);
   }
 
   return {
     name,
     registerAttack,
-    makeRandomAttack,
   };
 }
 
-function mainGameLoop() {
+function makeRandomAttack(board, randomIndex) {
+  let possibleCoordinates = board.returnListOfHittableCoordinates();
+  let arrayIndex;
+  if (randomIndex) {
+    arrayIndex = randomIndex;
+  } else {
+    arrayIndex = Math.floor(Math.random() * possibleCoordinates.length);
+  }
+  board.registerAttack(possibleCoordinates[arrayIndex]);
+}
+
+function gameController() {
   let playerArray = [];
   const gameboardsArray = [];
 
-  function addPlayer(players = playerArray, player, name) {
-    if (player) {
-      players.push(player);
-    } else {
-      players.push(playerFactory(name, true));
-    }
-    return players;
+  function addPlayer(name) {
+    playerArray.push(playerFactory(name, true));
   }
 
-  const defaultShipCoordinates = [
-    [
-      [1, 1],
-      [1, 3],
-    ],
-    [
-      [1, 4],
-      [1, 6],
-    ],
-    [
-      [8, 10],
-      [10, 10],
-    ],
-    [
-      [5, 5],
-      [5, 5],
-    ],
-    [
-      [8, 9],
-      [10, 9],
-    ],
-  ];
-
-  function populateEachBoard(
-    gameboards = gameboardsArray,
-    allCoordinates = defaultShipCoordinates
-  ) {
-    gameboardsArray.forEach((playerAndBoardWrapper) => {
-      allCoordinates.forEach((coordinatePair) => {
-        playerAndBoardWrapper.board.placeShip(coordinatePair);
-      });
-    });
-    return gameboards;
-  }
+  // there's an input and output element.
 
   function makeGameboardsForEachPlayer(
     players = playerArray,
@@ -285,5 +235,5 @@ module.exports = {
   returnOne,
   gameBoardFactory,
   playerFactory,
-  mainGameLoop,
+  gameController,
 };

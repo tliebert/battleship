@@ -127,7 +127,32 @@ describe("gameBoard", () => {
     ).toEqual(twoShips);
   });
 
-  // it("rejects a ship placement if overlapping other ship", test.todo);
+  it("rejects a ship placement if overlapping other ship", () => {
+    let threeLengthShip = JSON.stringify({
+      1: [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+      2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    });
+
+    gameBoardInstance.placeShip([
+      [3, 3],
+      [6, 3],
+    ]);
+
+    expect(
+      gameBoardInstance.placeShip([
+        [3, 3],
+        [6, 3],
+      ])
+    ).toBe(false);
+  });
 
   // // recieve attack and determine if there was a hit, log that hit on the ship
   // // or records coordinates of missed shot

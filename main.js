@@ -52,6 +52,21 @@ function gameBoardFactory() {
   function placeShip(startEndCoordinateArray) {
     let [startxcoord, startycoord] = startEndCoordinateArray[0];
     let [endxcoord, endycoord] = startEndCoordinateArray[1];
+
+    const isCoordinateEmpty = (coord) => {
+      console.log(coord);
+      return coord === 0;
+    };
+
+    if (
+      !runTestOnCoordinatesOfSubarray(
+        startEndCoordinateArray,
+        isCoordinateEmpty
+      )
+    ) {
+      return false;
+    }
+
     let ship = shipFactory(
       deriveShipLengthFromCoordinates(startEndCoordinateArray)
     );
@@ -74,6 +89,33 @@ function gameBoardFactory() {
     }
 
     return returnBoardRepresentation();
+  }
+
+  // takes a subarray and checks the value of the coordinate for each
+  // coordinate between start and end.
+
+  // testFunction is a callback that should take a single value
+  // from the board and return either true if it passes the test or false
+  function runTestOnCoordinatesOfSubarray(
+    startEndCoordinateArray,
+    testFunction
+  ) {
+    let [startxcoord, startycoord] = startEndCoordinateArray[0];
+    let [endxcoord, endycoord] = startEndCoordinateArray[1];
+    if (checkValidPlacement(startEndCoordinateArray)) {
+      if (!(endxcoord === startxcoord)) {
+        console.log("different start and ending x coordinates");
+        for (let i = startxcoord; i <= endxcoord; i++) {
+          console.log(i);
+          let valueAtShipLocation = returnValueAtCoordinate([i, startycoord]);
+          if (!testFunction(valueAtShipLocation)) {
+            return false;
+          }
+          continue;
+        }
+      }
+    }
+    return true;
   }
 
   function returnValueAtCoordinate(coordinateArray) {
@@ -120,7 +162,7 @@ function gameBoardFactory() {
   //       arrayOfHittableCoordinates.push([parseInt(key), index + 1]);
   //     }
   //   }
-  //   callFunctionOnEachCoordinate(board, isHittable);
+  //   callFunctionOnEveryBoardCoordinate(board, isHittable);
   //   return arrayOfHittableCoordinates;
   // }
 
@@ -130,7 +172,7 @@ function gameBoardFactory() {
   // for the value at coordinate of an arbitrary size array, then the y coordinate aka
   // key for the object, and finally the x-coordinate, aka the index in the array.
 
-  function callFunctionOnEachCoordinate(callback) {
+  function callFunctionOnEveryBoardCoordinate(callback) {
     for (const key in board) {
       if (gameBoard.hasOwnProperty(key)) {
         let array = board[key];
@@ -146,7 +188,7 @@ function gameBoardFactory() {
     function pusher(item) {
       allvalues.push(item);
     }
-    callFunctionOnEachCoordinate(board, pusher);
+    callFunctionOnEveryBoardCoordinate(board, pusher);
     return allvalues;
   }
 

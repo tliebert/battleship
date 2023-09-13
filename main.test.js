@@ -78,30 +78,27 @@ describe("gameBoard", () => {
     ).toEqual(oneShip);
   });
 
-  // it("places a ship greather than length one at all the coordinates", () => {
-  //   const othership = shipFactory(3); // should this be a stub
-  //   let threeShip = {
-  //     1: [othership, othership, othership, 0, 0, 0, 0, 0, 0, 0],
-  //     2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   };
-  //   expect(
-  //     gameBoardInstance.placeShip(
-  //       [
-  //         [1, 1],
-  //         [3, 1],
-  //       ],
-  //       othership
-  //     )
-  //   ).toEqual(threeShip);
-  // });
+  it("places a ship greather than length one at all the coordinates", () => {
+    let threeShip = JSON.stringify({
+      1: [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+      2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    });
+
+    expect(
+      gameBoardInstance.placeShip([
+        [1, 1],
+        [3, 1],
+      ])
+    ).toEqual(threeShip);
+  });
 
   // it("rejects a ship placement if overlapping other ship", test.todo);
 

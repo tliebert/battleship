@@ -110,7 +110,7 @@ function gameBoardFactory() {
   }
 
   function returnBoardRepresentation() {
-    return gameBoard;
+    return JSON.stringify(gameBoard);
   }
 
   // function returnListOfHittableCoordinates() {
@@ -172,8 +172,6 @@ function gameBoardFactory() {
     registerAttack,
     everyShipSunkChecker,
     canCoordinateBeHit,
-    returnListOfHittableCoordinates,
-    board,
   };
 }
 

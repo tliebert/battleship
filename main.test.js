@@ -35,8 +35,8 @@ describe("gameBoard", () => {
     gameBoardInstance = gameBoardFactory();
   });
 
-  let myObj = it("returns empty board state", () => {
-    let emptyBoard = `{
+  it("returns empty board state", () => {
+    let emptyBoard = JSON.stringify({
       1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -47,7 +47,7 @@ describe("gameBoard", () => {
       8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    }`;
+    });
 
     expect(gameBoardInstance.returnBoardRepresentation()).toEqual(emptyBoard);
   });

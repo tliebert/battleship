@@ -79,7 +79,7 @@ describe("gameBoard", () => {
   });
 
   it("places a ship greather than length one at all the coordinates", () => {
-    let threeShip = JSON.stringify({
+    let threeLengthShip = JSON.stringify({
       1: [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
       2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -97,7 +97,34 @@ describe("gameBoard", () => {
         [1, 1],
         [3, 1],
       ])
-    ).toEqual(threeShip);
+    ).toEqual(threeLengthShip);
+  });
+
+  it("places two ships at valid coordinates", () => {
+    let twoShips = JSON.stringify({
+      1: [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+      2: [2, 2, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    });
+
+    gameBoardInstance.placeShip([
+      [1, 1],
+      [3, 1],
+    ]);
+
+    expect(
+      gameBoardInstance.placeShip([
+        [1, 2],
+        [2, 2],
+      ])
+    ).toEqual(twoShips);
   });
 
   // it("rejects a ship placement if overlapping other ship", test.todo);

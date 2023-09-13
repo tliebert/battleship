@@ -73,7 +73,7 @@ function gameBoardFactory() {
       }
     }
 
-    return gameBoard;
+    return returnBoardRepresentation();
   }
 
   function returnValueAtCoordinate(coordinateArray) {

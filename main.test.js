@@ -162,43 +162,28 @@ describe("gameBoard", () => {
   // my options there would be mocking or dependence injection
   // will revisit it later.
 
-  // it("Changes board to reflect hit after recieving attack", () => {
-  //   let hitship = {
-  //     registerHit: () => {
-  //       console.log("been hit");
-  //     },
-  //   };
+  it("Changes board to reflect hit after recieving attack", () => {
+    let threeShip = JSON.stringify({
+      1: ["Hit", 1, 1, 0, 0, 0, 0, 0, 0, 0],
+      2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    });
 
-  //   let shipboard = {
-  //     1: [hitship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   };
+    gameBoardInstance.placeShip([
+      [1, 1],
+      [3, 1],
+    ]);
+    expect(gameBoardInstance.registerAttack([1, 1])).toEqual(threeShip);
+  });
 
-  //   let hitboard = {
-  //     1: ["Hit", 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   };
-
-  //   expect(gameBoardInstance.registerAttack([1, 1], shipboard)).toEqual(
-  //     hitboard
-  //   );
-  // });
+  it("Changes board to reflect miss after recieving attack on empty space", () => {});
 
   // it("recieves an unsuccessful attack on a ship and logs it was missed", () => {
   //   let missboard = {

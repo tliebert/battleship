@@ -119,6 +119,8 @@ function gameBoardFactory() {
     return true;
   }
 
+  function callHitOnShip(shipnumber) {}
+
   function returnValueAtCoordinate(coordinateArray) {
     let [xcoord, ycoord] = coordinateArray;
     return gameBoard[ycoord][xcoord - 1];
@@ -132,14 +134,15 @@ function gameBoardFactory() {
       gameBoard
     );
 
-    if ((valueAtCoordinate = "Hit")) {
+    if (valueAtCoordinate === "Hit") {
       throw new Error("already hit, shoulnd't be allowed to hit there");
     } else if (valueAtCoordinate === 0) {
       gameBoard[ycoord][xcoord - 1] = "Miss";
-    } else if (typeof valueAtCoordinate === "number" && valueAtCoordinate < 0) {
-      valueAtCoordinate.registerHit();
-      return true;
+    } else if (typeof valueAtCoordinate === "number" && valueAtCoordinate > 0) {
+      callHitOnShip(valueAtCoordinate);
+      gameBoard[ycoord][xcoord - 1] = "Hit";
     }
+    return returnBoardRepresentation();
   }
 
   function everyShipSunkChecker() {}

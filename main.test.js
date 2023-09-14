@@ -204,12 +204,16 @@ describe("gameBoard", () => {
     expect(gameBoardInstance.registerAttack([4, 1])).toEqual(threeShip);
   });
 
-  it("checks if all ships are sunk", () => {
+  it("returns false if there are unsunk ships", () => {
     gameBoardInstance.placeShip([
       [1, 1],
       [3, 1],
     ]);
     expect(gameBoardInstance.everyShipSunkChecker()).toEqual(false);
+  });
+
+  it("returns true if there are no ships on the board", () => {
+    expect(gameBoardInstance.everyShipSunkChecker()).toEqual(true);
   });
 
   // it("returns a list of hittable coordinates", () => {

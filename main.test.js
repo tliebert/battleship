@@ -154,10 +154,6 @@ describe("gameBoard", () => {
     ).toBe(false);
   });
 
-  it("Recieves coordinates for a hit and calls hit on the ship at those coordinates", () => {
-    test.skip;
-  });
-
   // not a good way to test this part of the board, and it's really an integration of two units
   // my options there would be mocking or dependence injection
   // will revisit it later.
@@ -216,19 +212,15 @@ describe("gameBoard", () => {
     expect(gameBoardInstance.everyShipSunkChecker()).toEqual(true);
   });
 
-  // it("returns a list of hittable coordinates", () => {
-  //   let unsunkship = { isThisShipSunk: () => false };
-  //   let stubboard = {
-  //     1: ["Hit", 0],
-  //     2: [unsunkship, "x"],
-  //   };
-  //   expect(
-  //     gameBoardInstance.returnListOfHittableCoordinates(stubboard)
-  //   ).toEqual([
-  //     [1, 2],
-  //     [2, 1],
-  //   ]);
-  // });
+  it("Recieves coordinates for a hit and calls hit on the ship at those coordinates", () => {
+    gameBoardInstance.placeShip([
+      [1, 1],
+      [1, 1],
+    ]);
+    gameBoardInstance.registerAttack([1, 1]);
+    let ships = gameBoardInstance.getArrayOfShips();
+    expect(ships[0].isThisShipSunk()).toBe(true);
+  });
 });
 
 // describe("player Factory", () => {

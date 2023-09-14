@@ -15,14 +15,6 @@ function shipFactory(length) {
     currentHits += 1;
     return currentHits;
   }
-  // register hit
-  // array  update array, ship hits
-  // is ship sunk
-
-  // isSunk pure function that doesn't rely on state
-  // two numbers and compare, if equal return true
-
-  // add dependency injection
 
   function isThisShipSunk() {
     return currentHits >= shiplength;
@@ -44,10 +36,20 @@ function makeEmptyBoard() {
   return emptyBoard;
 }
 
+// main controller for placing and coordinating attack on ships.
+// Board is represented by Empty spaces (0), or by numbered ships (1, 2, 3), keyed
+// by their place in a ships array. Representation of the board does not return objects
+// but rather a stringified represntation of the board. Hits and Misses are spelled out as
+// strings.
+
 function gameBoardFactory() {
   const gameBoard = makeEmptyBoard();
 
   const ships = [];
+
+  function getArrayOfShips() {
+    return ships;
+  }
 
   function placeShip(startEndCoordinateArray) {
     let [startxcoord, startycoord] = startEndCoordinateArray[0];
@@ -119,7 +121,9 @@ function gameBoardFactory() {
     return true;
   }
 
-  function callHitOnShip(shipnumber) {}
+  function callHitOnShip(shipnumber) {
+    ships[shipnumber - 1].registerHit();
+  }
 
   function returnValueAtCoordinate(coordinateArray) {
     let [xcoord, ycoord] = coordinateArray;
@@ -228,6 +232,7 @@ function gameBoardFactory() {
     registerAttack,
     everyShipSunkChecker,
     canCoordinateBeHit,
+    getArrayOfShips,
   };
 }
 

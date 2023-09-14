@@ -58,6 +58,7 @@ function gameBoardFactory() {
       return coord === 0;
     };
 
+    // if any of the coordinates are not empty (0), it will return false
     if (
       !runTestOnCoordinatesOfSubarray(
         startEndCoordinateArray,
@@ -104,7 +105,7 @@ function gameBoardFactory() {
     let [endxcoord, endycoord] = startEndCoordinateArray[1];
     if (checkValidPlacement(startEndCoordinateArray)) {
       if (!(endxcoord === startxcoord)) {
-        console.log("different start and ending x coordinates");
+        // do I need to check this?
         for (let i = startxcoord; i <= endxcoord; i++) {
           console.log(i);
           let valueAtShipLocation = returnValueAtCoordinate([i, startycoord]);

@@ -154,22 +154,13 @@ describe("gameBoard", () => {
     ).toBe(false);
   });
 
-  // // recieve attack and determine if there was a hit, log that hit on the ship
-  // // or records coordinates of missed shot
+  it("Recieves coordinates for a hit and calls hit on the ship at those coordinates", () => {
+    test.skip;
+  });
 
-  // it("Recieves coordinates for a hit and calls hit on the ship at those coordinates", () => {
-  //   // incoming command message
-  //   // options: Mock correct ship
-  //   // pass the board as an argument?
-
-  //   let hitship = { registerHit: jest.fn() };
-  //   let shipboard = {
-  //     1: [hitship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   };
-
-  //   gameBoardInstance.registerAttack([1, 1], shipboard);
-  //   expect(hitship.registerHit).toHaveBeenCalled();
-  // });
+  // not a good way to test this part of the board, and it's really an integration of two units
+  // my options there would be mocking or dependence injection
+  // will revisit it later.
 
   // it("Changes board to reflect hit after recieving attack", () => {
   //   let hitship = {

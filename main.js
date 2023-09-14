@@ -145,7 +145,17 @@ function gameBoardFactory() {
     return returnBoardRepresentation();
   }
 
-  function everyShipSunkChecker() {}
+  function everyShipSunkChecker() {
+    let allValues = returnArrayOfAllBoardValues();
+    if (
+      allValues.some((boardspace) => {
+        return typeof boardspace === "number" && boardspace > 0;
+      })
+    ) {
+      return false;
+    }
+    return true;
+  }
 
   function canCoordinateBeHit(coordinateArray) {
     if (returnValueAtCoordinate(coordinateArray, gameBoard) === 0) {
@@ -177,9 +187,9 @@ function gameBoardFactory() {
   // key for the object, and finally the x-coordinate, aka the index in the array.
 
   function callFunctionOnEveryBoardCoordinate(callback) {
-    for (const key in board) {
+    for (const key in gameBoard) {
       if (gameBoard.hasOwnProperty(key)) {
-        let array = board[key];
+        let array = gameBoard[key];
         for (let i = 0; i < array.length; i++) {
           callback(array[i], key, i);
         }
@@ -192,7 +202,7 @@ function gameBoardFactory() {
     function pusher(item) {
       allvalues.push(item);
     }
-    callFunctionOnEveryBoardCoordinate(board, pusher);
+    callFunctionOnEveryBoardCoordinate(pusher);
     return allvalues;
   }
 

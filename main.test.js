@@ -204,45 +204,13 @@ describe("gameBoard", () => {
     expect(gameBoardInstance.registerAttack([4, 1])).toEqual(threeShip);
   });
 
-  // it("recieves an unsuccessful attack on a ship and logs it was missed", () => {
-  //   let missboard = {
-  //     1: ["x", 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   };
-  //   expect(gameBoardInstance.registerAttack([1, 1])).toEqual(missboard);
-  // });
-
-  // it("checks if all ships are sunk", () => {
-  //   let sunkship = { isThisShipSunk: () => true };
-  //   let unsunkship = { isThisShipSunk: () => false };
-  //   let somesunkshipboard = {
-  //     1: [sunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     10: [unsunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   };
-  //   let allsunkshipboard = {
-  //     1: [sunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     10: [sunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   };
-  //   let nonesunkshipboard = {
-  //     1: [unsunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //     10: [unsunkship, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   };
-  //   expect(gameBoardInstance.everyShipSunkChecker(allsunkshipboard)).toBe(true);
-  //   expect(gameBoardInstance.everyShipSunkChecker(somesunkshipboard)).toBe(
-  //     false
-  //   );
-  //   expect(gameBoardInstance.everyShipSunkChecker(nonesunkshipboard)).toBe(
-  //     false
-  //   );
-  // });
+  it("checks if all ships are sunk", () => {
+    gameBoardInstance.placeShip([
+      [1, 1],
+      [3, 1],
+    ]);
+    expect(gameBoardInstance.everyShipSunkChecker()).toEqual(false);
+  });
 
   // it("returns a list of hittable coordinates", () => {
   //   let unsunkship = { isThisShipSunk: () => false };

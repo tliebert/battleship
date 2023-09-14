@@ -183,7 +183,26 @@ describe("gameBoard", () => {
     expect(gameBoardInstance.registerAttack([1, 1])).toEqual(threeShip);
   });
 
-  it("Changes board to reflect miss after recieving attack on empty space", () => {});
+  it("Changes board to reflect miss after recieving attack on empty space", () => {
+    let threeShip = JSON.stringify({
+      1: [1, 1, 1, "Miss", 0, 0, 0, 0, 0, 0],
+      2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    });
+
+    gameBoardInstance.placeShip([
+      [1, 1],
+      [3, 1],
+    ]);
+    expect(gameBoardInstance.registerAttack([4, 1])).toEqual(threeShip);
+  });
 
   // it("recieves an unsuccessful attack on a ship and logs it was missed", () => {
   //   let missboard = {

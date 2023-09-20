@@ -241,16 +241,13 @@ function gameBoardFactory() {
 // ai player should have funtion that makes legal random move given gameboard
 
 function playerFactory(name) {
-  let enemyplayer;
-  let board;
-
-  function registerAttack(coordinateArray) {
-    return board.registerAttack(coordinateArray);
+  function attackOpponentBoard(coordinateArray, opponentboard) {
+    opponentboard.registerAttack(coordinateArray);
   }
 
   return {
     name,
-    registerAttack,
+    attackOpponentBoard,
   };
 }
 

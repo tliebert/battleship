@@ -196,6 +196,7 @@ describe("gameBoard", () => {
     gameBoardInstance.placeShip([
       [1, 1],
       [3, 1],
+      //ship
     ]);
     expect(gameBoardInstance.registerAttack([4, 1])).toEqual(threeShip);
   });
@@ -223,40 +224,35 @@ describe("gameBoard", () => {
   });
 });
 
-// describe("player Factory", () => {
-//   it("returns player object with correct properties", () => {
-//     let playermock = { name: "Thomas", registerAttack: () => {} };
-//     let player2mock = { name: "Dan", registerAttack: () => {} };
-//     expect(playerFactory("Thomas")).toHaveProperty("registerAttack");
-//     expect(playerFactory("Dan").name).toMatch("Dan");
-//   });
+describe("player Factory", () => {
+  it("returns player object with correct properties", () => {});
 
-//   it("can send an attack to a game board", () => {
-//     // board that recieves message
-//     // when given board, player object sucessfully sends message
-//     let newPlayer = playerFactory("testname");
-//     let board = { registerAttack: jest.fn() };
-//     newPlayer.registerAttack([1, 1], board);
-//     expect(board.registerAttack).toHaveBeenCalled();
-//   });
+  it("can send an attack to a game board", () => {
+    // board that recieves message
+    // when given board, player object sucessfully sends message
+    let newPlayer = playerFactory("testname");
+    let board = { registerAttack: jest.fn() };
+    newPlayer.registerAttack([1, 1], board);
+    expect(board.registerAttack).toHaveBeenCalled();
+  });
 
-//   it("initializes with a make random move function if passed ai argument is true", () => {
-//     expect(playerFactory("robot", true)).toHaveProperty("makeRandomAttack");
-//   });
+  it("initializes with a make random move function if passed ai argument is true", () => {
+    expect(playerFactory("robot", true)).toHaveProperty("makeRandomAttack");
+  });
 
-//   it("sends a random attack when given a board", () => {
-//     let mockboard = {
-//       returnListOfHittableCoordinates: () => {
-//         return [[1, 1]];
-//       },
-//       registerAttack: jest.fn(),
-//     };
-//     let player = playerFactory("Robot", true);
-//     player.makeRandomAttack(mockboard, 0);
-//     expect(mockboard.registerAttack).toHaveBeenCalled();
-//     expect(mockboard.registerAttack).toHaveBeenCalledWith([1, 1]);
-//   });
-// });
+  it("sends a random attack when given a board", () => {
+    let mockboard = {
+      returnListOfHittableCoordinates: () => {
+        return [[1, 1]];
+      },
+      registerAttack: jest.fn(),
+    };
+    let player = playerFactory("Robot", true);
+    player.makeRandomAttack(mockboard, 0);
+    expect(mockboard.registerAttack).toHaveBeenCalled();
+    expect(mockboard.registerAttack).toHaveBeenCalledWith([1, 1]);
+  });
+});
 
 // describe("main game loop", () => {
 //   let gameController;

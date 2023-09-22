@@ -45,6 +45,8 @@ function makeEmptyBoard() {
 function gameBoardFactory() {
   const gameBoard = makeEmptyBoard();
 
+  // function that makes gameBoard arbitrary size
+
   const ships = [];
 
   function getArrayOfShips() {
@@ -133,13 +135,10 @@ function gameBoardFactory() {
   function registerAttack(hitCoordinateArray) {
     let [xcoord, ycoord] = hitCoordinateArray;
 
-    let valueAtCoordinate = returnValueAtCoordinate(
-      hitCoordinateArray,
-      gameBoard
-    );
+    let valueAtCoordinate = returnValueAtCoordinate(hitCoordinateArray);
 
-    if (valueAtCoordinate === "Hit") {
-      throw new Error("already hit, shoulnd't be allowed to hit there");
+    if (valueAtCoordinate === "Hit" || valueAtCoordinate === "Miss") {
+      throw new Error("already attacked, shoulnd't be allowed to hit there");
     } else if (valueAtCoordinate === 0) {
       gameBoard[ycoord][xcoord - 1] = "Miss";
     } else if (typeof valueAtCoordinate === "number" && valueAtCoordinate > 0) {
@@ -173,16 +172,16 @@ function gameBoardFactory() {
     return JSON.stringify(gameBoard);
   }
 
-  // function returnListOfHittableCoordinates() {
-  //   let arrayOfHittableCoordinates = [];
-  //   function isHittable(item, key, index) {
-  //     if (item !== "Hit" && item !== "x") {
-  //       arrayOfHittableCoordinates.push([parseInt(key), index + 1]);
-  //     }
-  //   }
-  //   callFunctionOnEveryBoardCoordinate(board, isHittable);
-  //   return arrayOfHittableCoordinates;
-  // }
+  function returnListOfHittableCoordinates() {
+    let arrayOfHittableCoordinates = [];
+    function isHittable(item, key, index) {
+      if (!(item === "Hit") && !(item === "Miss")) {
+        arrayOfHittableCoordinates.push([parseInt(key), index + 1]);
+      }
+    }
+    callFunctionOnEveryBoardCoordinate(isHittable);
+    return arrayOfHittableCoordinates;
+  }
 
   // internal helper function
 
@@ -233,6 +232,7 @@ function gameBoardFactory() {
     everyShipSunkChecker,
     canCoordinateBeHit,
     getArrayOfShips,
+    returnListOfHittableCoordinates,
   };
 }
 
@@ -240,14 +240,41 @@ function gameBoardFactory() {
 // player should be be able to attack squares
 // ai player should have funtion that makes legal random move given gameboard
 
+// p1board.placeShip
+// p2board
+
+//player.attackBoard(board)
+
 function playerFactory(name) {
-  function attackOpponentBoard(coordinateArray, opponentboard) {
-    opponentboard.registerAttack(coordinateArray);
+  function attackOpponentBoard(coordinateArray, opponentBoard) {
+    opponentBoard.registerAttack(coordinateArray);
+  }
+
+  // function loadEnemyBoard(opponentBoardObject) {
+  //   enemyBoard = opponentBoardObject;
+  // }
+
+  // make a board that's a mock w/ limited properties.
+  // Use boardfactory to make a different type of board.
+
+  function makeRandomAttack(opponentBoard) {
+    // loop through board and create list of hittable coordinates
+    let hittables = opponentBoard.returnListOfHittableCoordinates();
+
+    let randomIndex = Math.floor(Math.random() * hittables.length);
+    let coordinatesToHit = hittables[randomIndex];
+    console.log(coordinatesToHit);
+
+    return opponentBoard.registerAttack(coordinatesToHit);
+
+    // randomly pick a number between 0 and array length.
+    // hit that coordinate.
   }
 
   return {
     name,
     attackOpponentBoard,
+    makeRandomAttack,
   };
 }
 

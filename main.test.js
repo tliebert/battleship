@@ -234,7 +234,14 @@ describe("player Factory", () => {
     expect(testPlayer.name).toEqual("testname");
   });
 
+  //
+
   it("can attack another player's board", () => {
+    // create test player
+    // give player mock board w/ required functions
+    // give mock board to player
+    // play random attack & inspect results
+
     const registerAttack = jest.fn();
     let opponentBoard = { registerAttack: registerAttack };
     testPlayer.attackOpponentBoard([1, 1], opponentBoard);
@@ -246,6 +253,150 @@ describe("player Factory", () => {
     let opponentBoard = { registerAttack: registerAttack };
     testPlayer.attackOpponentBoard([1, 1], opponentBoard);
     expect(registerAttack.mock.calls).toHaveLength(1);
+  });
+
+  // it("can make a random attack that doesn't hit spaces already attacked", () => {
+  //   let randomAttackBoard = { 1: ["Hit", 0] };
+  //   let res = testPlayer.makeRandomAttack(randomAttackBoard); //gameBoard Object
+  //   expect(res).toBe(JSON.stringify({ 1: ["Hit", "Hit"] }));
+  // });
+
+  // it("hit a one length board space", () => {
+  //   let randomAttackBoard = { 1: [0] };
+  //   //
+  //   let res = testPlayer.makeRandomAttack(randomAttackBoard); //gameBoard Object
+  //   expect(res).toBe(JSON.stringify({ 1: ["Hit"] }));
+  // });
+  it("fills up an empty gameboard with random attacks", () => {
+    let randomAttackBoard = {
+      1: [
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+      ],
+      2: [
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+      ],
+      3: [
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+      ],
+      4: [
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+      ],
+      5: [
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+      ],
+      6: [
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+      ],
+      7: [
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+      ],
+      8: [
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+      ],
+      9: [
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+      ],
+      10: [
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+        "Miss",
+      ],
+    };
+
+    let gameBoard = gameBoardFactory();
+
+    for (let i = 0; i < 100; i++) {
+      testPlayer.makeRandomAttack(gameBoard);
+    }
+    expect(gameBoard.returnBoardRepresentation()).toEqual(randomAttackBoard);
   });
 });
 

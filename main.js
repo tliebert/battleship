@@ -289,8 +289,7 @@ function playerFactory(name) {
 
 function gameController() {
   const playerArray = [];
-  let player1Board;
-  let player2Board;
+  const boardsArray = [];
   let activePlayerIndex = 0;
 
   function addPlayer(name) {
@@ -308,7 +307,11 @@ function gameController() {
     console.log("active player index, end of switch:", activePlayerIndex);
   }
 
-  function returnboards() {}
+  function returnArrayOfBoardStrings() {
+    return boardsArray.map((gameBoard) => {
+      return gameBoard.returnBoardRepresentation();
+    });
+  }
 
   function returnActivePlayer() {
     return playerArray[activePlayerIndex];
@@ -316,7 +319,11 @@ function gameController() {
 
   function checkForWinner() {}
 
-  function returnArrayOfBoards() {}
+  function makeGameboardForEachPlayer() {
+    for (let i = 0; i < playerArray.length; i++) {
+      boardsArray.push(gameBoardFactory());
+    }
+  }
 
   function returnAvailableShipsToPlace() {}
 
@@ -331,7 +338,8 @@ function gameController() {
     registerHit,
     returnActivePlayer,
     checkForWinner,
-    returnArrayOfBoards,
+    returnArrayOfBoardStrings,
+    makeGameboardForEachPlayer,
   };
 }
 

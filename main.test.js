@@ -427,6 +427,37 @@ describe("Game Controller", () => {
     testGameController.registerHit();
     expect(testGameController.returnActivePlayer()["name"]).toBe("Thomas");
   });
+
+  it("can return a representation of each board", () => {
+    let dummyBoard = JSON.stringify({
+      1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    });
+    testGameController.addPlayer("Thomas");
+    testGameController.addPlayer("Player2");
+    testGameController.makeGameboardForEachPlayer();
+    expect(testGameController.returnArrayOfBoardStrings()[0]).toEqual(
+      dummyBoard
+    );
+    expect(testGameController.returnArrayOfBoardStrings()[1]).toEqual(
+      dummyBoard
+    );
+  });
+
+  it(
+    "Can recieve an incoming hit and player board number and direct it to the appropriate gameboard",
+    test.todo
+    // testGameController.registerHit(player1, [1,1])
+  );
+
   // it("switches the active player", () => {
   //   testGameController.switchActivePlayer();
   // });

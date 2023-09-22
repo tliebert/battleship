@@ -257,17 +257,11 @@ function playerFactory(name) {
 
   function makeRandomAttack(opponentBoard) {
     // loop through board and create list of hittable coordinates
-    console.log(
-      "opponent board at begginning of makeRandomAttack",
-      opponentBoard.returnBoardRepresentation()
-    );
     let hittables = opponentBoard.returnListOfHittableCoordinates();
-    console.log("hittables in makeRandomAttack", hittables);
     // are hittables right
 
     let randomIndex = Math.floor(Math.random() * hittables.length);
     let coordinatesToHit = hittables[randomIndex];
-    console.log(coordinatesToHit);
 
     return opponentBoard.registerAttack(coordinatesToHit);
 
@@ -282,41 +276,62 @@ function playerFactory(name) {
   };
 }
 
-function makeRandomAttack(board, randomIndex) {
-  let possibleCoordinates = board.returnListOfHittableCoordinates();
-  let arrayIndex;
-  if (randomIndex) {
-    arrayIndex = randomIndex;
-  } else {
-    arrayIndex = Math.floor(Math.random() * possibleCoordinates.length);
-  }
-  board.registerAttack(possibleCoordinates[arrayIndex]);
-}
+// function makeRandomAttack(board, randomIndex) {
+//   let possibleCoordinates = board.returnListOfHittableCoordinates();
+//   let arrayIndex;
+//   if (randomIndex) {
+//     arrayIndex = randomIndex;
+//   } else {
+//     arrayIndex = Math.floor(Math.random() * possibleCoordinates.length);
+//   }
+//   board.registerAttack(possibleCoordinates[arrayIndex]);
+// }
 
 function gameController() {
-  let playerArray = [];
-  const gameboardsArray = [];
+  const playerArray = [];
+  let player1Board;
+  let player2Board;
+  let activePlayerIndex = 0;
 
   function addPlayer(name) {
-    playerArray.push(playerFactory(name, true));
+    playerArray.push(playerFactory(name));
+    return playerArray;
   }
 
-  // there's an input and output element.
+  function switchActivePlayer() {
+    console.log("active player index, start of switch:", activePlayerIndex);
+    if (activePlayerIndex === 0) {
+      activePlayerIndex = 1;
+    } else if (activePlayerIndex === 1) {
+      activePlayerIndex = 0;
+    } else throw new Error("player index not 0 or 1");
+    console.log("active player index, end of switch:", activePlayerIndex);
+  }
 
-  function makeGameboardsForEachPlayer(
-    players = playerArray,
-    boardMakerFactory = gameBoardFactory(),
-    gameboards = gameboardsArray
-  ) {
-    return (gameboards = players.map((playerObj) => {
-      return { player: playerObj, board: boardMakerFactory() };
-    }));
+  function returnboards() {}
+
+  function returnActivePlayer() {
+    return playerArray[activePlayerIndex];
+  }
+
+  function checkForWinner() {}
+
+  function returnArrayOfBoards() {}
+
+  function returnAvailableShipsToPlace() {}
+
+  function placeShip() {}
+
+  function registerHit() {
+    switchActivePlayer();
   }
 
   return {
     addPlayer,
-    makeGameboardsForEachPlayer,
-    populateEachBoard,
+    registerHit,
+    returnActivePlayer,
+    checkForWinner,
+    returnArrayOfBoards,
   };
 }
 

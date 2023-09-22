@@ -2,7 +2,6 @@ import {
   returnOne,
   shipFactory,
   gameBoardFactory,
-  registerAttack,
   playerFactory,
   gameController,
 } from "./main.js";
@@ -248,7 +247,7 @@ describe("player Factory", () => {
     expect(registerAttack).toHaveBeenCalled();
   });
 
-  it("can inspect a mock function in a different way", () => {
+  it("it sends the register attack command on the correct interface", () => {
     const registerAttack = jest.fn();
     let opponentBoard = { registerAttack: registerAttack };
     testPlayer.attackOpponentBoard([1, 1], opponentBoard);
@@ -267,6 +266,7 @@ describe("player Factory", () => {
   //   let res = testPlayer.makeRandomAttack(randomAttackBoard); //gameBoard Object
   //   expect(res).toBe(JSON.stringify({ 1: ["Hit"] }));
   // });
+
   it("fills up an empty gameboard with random attacks", () => {
     let randomAttackBoard = {
       1: [
@@ -402,6 +402,37 @@ describe("player Factory", () => {
   });
 });
 
+describe("Game Controller", () => {
+  let testGameController;
+  beforeEach(() => {
+    testGameController = gameController();
+  });
+  it("adds a player of given name to the array of players", () => {
+    expect(testGameController.addPlayer("Thomas")[0]["name"]).toBe("Thomas");
+  });
+  it("returns the active player", () => {
+    testGameController.addPlayer("Thomas");
+    expect(testGameController.returnActivePlayer()["name"]).toBe("Thomas");
+  });
+  it("switches the active player after recieving a hit", () => {
+    testGameController.addPlayer("Thomas");
+    testGameController.addPlayer("Player2");
+    testGameController.registerHit();
+    expect(testGameController.returnActivePlayer()["name"]).toBe("Player2");
+  });
+  it("Returns back to player1 after 2 hits", () => {
+    testGameController.addPlayer("Thomas");
+    testGameController.addPlayer("Player2");
+    testGameController.registerHit();
+    testGameController.registerHit();
+    expect(testGameController.returnActivePlayer()["name"]).toBe("Thomas");
+  });
+  // it("switches the active player", () => {
+  //   testGameController.switchActivePlayer();
+  // });
+  // Choosing not to test this, as it makes more sense as an internal command
+});
+
 // describe("main game loop", () => {
 //   let gameController;
 
@@ -422,6 +453,7 @@ describe("player Factory", () => {
 //       playersAfter
 //     );
 //   });
+
 //   it("creates a gameboard for each player", () => {
 //     let mockplayers = [{ name: "One" }, { name: "Two" }];
 //     let mockfactory = () => {

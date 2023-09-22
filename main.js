@@ -58,7 +58,6 @@ function gameBoardFactory() {
     let [endxcoord, endycoord] = startEndCoordinateArray[1];
 
     const isCoordinateEmpty = (coord) => {
-      console.log(coord);
       return coord === 0;
     };
 
@@ -111,7 +110,6 @@ function gameBoardFactory() {
       if (!(endxcoord === startxcoord)) {
         // do I need to check this?
         for (let i = startxcoord; i <= endxcoord; i++) {
-          console.log(i);
           let valueAtShipLocation = returnValueAtCoordinate([i, startycoord]);
           if (!testFunction(valueAtShipLocation)) {
             return false;
@@ -176,7 +174,7 @@ function gameBoardFactory() {
     let arrayOfHittableCoordinates = [];
     function isHittable(item, key, index) {
       if (!(item === "Hit") && !(item === "Miss")) {
-        arrayOfHittableCoordinates.push([parseInt(key), index + 1]);
+        arrayOfHittableCoordinates.push([index + 1, parseInt(key)]);
       }
     }
     callFunctionOnEveryBoardCoordinate(isHittable);
@@ -259,7 +257,13 @@ function playerFactory(name) {
 
   function makeRandomAttack(opponentBoard) {
     // loop through board and create list of hittable coordinates
+    console.log(
+      "opponent board at begginning of makeRandomAttack",
+      opponentBoard.returnBoardRepresentation()
+    );
     let hittables = opponentBoard.returnListOfHittableCoordinates();
+    console.log("hittables in makeRandomAttack", hittables);
+    // are hittables right
 
     let randomIndex = Math.floor(Math.random() * hittables.length);
     let coordinatesToHit = hittables[randomIndex];

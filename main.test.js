@@ -396,7 +396,9 @@ describe("player Factory", () => {
     for (let i = 0; i < 100; i++) {
       testPlayer.makeRandomAttack(gameBoard);
     }
-    expect(gameBoard.returnBoardRepresentation()).toEqual(randomAttackBoard);
+    expect(gameBoard.returnBoardRepresentation()).toEqual(
+      JSON.stringify(randomAttackBoard)
+    );
   });
 });
 

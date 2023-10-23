@@ -452,11 +452,15 @@ describe("Game Controller", () => {
     );
   });
 
-  it(
-    "Can recieve an incoming hit and player board number and direct it to the appropriate gameboard",
-    test.todo
-    // testGameController.registerHit(player1, [1,1])
-  );
+  it("Can recieve an incoming hit and player board number and direct it to the appropriate gameboard", () => {
+    testGameController.addPlayer("Thomas");
+    testGameController.registerHit("1", [1, 1]); // fixing Hit vs Attack syntax
+    expect(testGameController.returnArrayOfBoardStrings()[0]["1"][0]).toBe(
+      "Miss"
+    );
+  });
+
+  // testGameController.registerHit(player1, [1,1])
 
   // it("switches the active player", () => {
   //   testGameController.switchActivePlayer();
